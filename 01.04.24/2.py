@@ -9,5 +9,5 @@ word = input("Введите слово: ").upper()
 total_score = 0
 for let in word:
     if let in scores:
-        total_score += scores[let]
+        total_score += scores[let] * 2
 print(f"Стоимость  слова '{word}': {total_score} очков")
