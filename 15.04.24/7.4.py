@@ -1,17 +1,31 @@
 from PIL import Image, ImageDraw, ImageFont
-def znak(mesto, text):
-    image = Image.open(mesto)
+import os
 
-    drawing = ImageDraw.Draw(image)
+def add_watermark_to_image(input_image_path, output_image_path, watermark_text):
+    img = Image.open(input_image_path)
+    draw = ImageDraw.Draw(img)
+    font = ImageFont.truetype("arial.ttf", 50)
+    #text_width, text_height = draw.textsize(watermark_text, font=font)
+    text_position = ((img.width ) // 2, (img.height ) // 2)
+    text_color = (255, 255, 255)
+    draw.text(text_position, watermark_text, fill=text_color, font=font)
 
-    colour = (255, 255, 255)
-    font = ImageFont.truetype("arial.ttf", 40)
-    drawing.text((0,0), text, fill=colour, font=font)
+    draw = img.convert('RGB')
+    draw.save(output_image_path)
 
-    image.save("znak" + mesto)
+def main():
+    input_folder = "C:/Users/torho/Downloads/15.04.24"
+    output_folder = "C:/Users/torho/Downloads/15.04.24"
+    watermark_text = "ЫЫЫ"
 
+    if not os.path.exists(output_folder):
+        os.makedirs(output_folder)
 
-image_files = ["1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg"]
-znak_text = "Знак"
-for file in image_files:
-    znak(file, znak_text)
+    for filename in os.listdir(input_folder):
+        if filename.endswith(".jpg"):
+            input_image_path = os.path.join(input_folder, filename)
+            output_image_path = os.path.join(output_folder, f"watermarked_{filename}")
+            add_watermark_to_image(input_image_path, output_image_path, watermark_text)
+
+if __name__ == "__main__":
+    main()

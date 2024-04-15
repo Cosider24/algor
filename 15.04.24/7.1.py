@@ -1,7 +1,9 @@
 from PIL import Image
 
-image = Image.open("1.jpg")
+
+image = Image.open("C:/Users/torho/Downloads/15.04.24/2.jpg.jpg")
 image.show()
 print(image.size)
-print(image.format)
 print(image.mode)
+print(image.format)
+

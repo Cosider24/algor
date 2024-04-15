@@ -1,11 +1,19 @@
 from PIL import Image
 
-image = Image.open("1.jpg")
-new = image.resize((image.width // 3, image.height // 3))
+def main():
+    image_path = "C:/Users/torho/Downloads/15.04.24/3.jpg.jpg"
 
-gorizont = image.rotate(180)
-vertical = image.rotate(90)
+    img = Image.open(image_path)
 
-new.save("new.jpg")
-gorizont.save("gorizont.jpg")
-vertical.save("vertical.jpg")
+    resized_img = img.resize((img.width // 3, img.height // 3))
+    mirrored_horizontal = img.rotate(180)
+    mirrored_vertical = img.rotate(90)
+
+    resized_img.save("resized_image.jpg")
+    mirrored_horizontal.save("mirrored_horizontal.jpg")
+    mirrored_vertical.save("mirrored_vertical.jpg")
+
+    print("Уменьшенное изображение и зеркальные отражения сохранены.")
+
+if __name__ == "__main__":
+    main()
