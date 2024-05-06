@@ -1,12 +1,10 @@
-def nom3():
-    party = Image.open('mart.jpg')
-    imdraw = ImageDraw.Draw(party)
-    x = input("введите имя: ")
-    text = str(x) + ', поздравляю! '
-    font = ImageFont.truetype("SuperWebcomicBros_Rusbyyakustick_-Regular_0.ttf", size = 50)
-    y = imdraw.textsize(text, font=font)
-    z = party.size
-    w = (z[0] // 2) - (y[0] // 2)
-    imdraw.text((w, 10), text, font=font, fill=("#ff0000"))
-    party.save("newmart.png")
-    party.show()
+from PIL import Image, ImageDraw, ImageFont
+img = Image.open("newyear.jpg")
+name = input()
+new_img = img.crop((100, 10, 600, 200))
+draw = ImageDraw.Draw(new_img)
+text = name + " , поздравляю!"
+font = ImageFont.truetype("arialbd.ttf", 30)
+draw.text((50, 20), text, fill="blue", font=font)
+new_name = "new1.png"
+new_img.save(new_name)
