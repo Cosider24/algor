@@ -1,6 +1,6 @@
 import json
 
-with open('products.json', 'r') as f:
+with open('products.json', 'r', encoding='UTF-8') as f:
     products = json.load(f)
 
 for product in products['products']:
