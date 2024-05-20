@@ -1,17 +1,18 @@
-with open('en-ru.txt', 'r', encoding='utf-8') as f:
+import re
+
+with open('en-ru.txt', 'r') as f:
     en_ru_dict = {}
     for line in f:
-        en_word, ru_word = line.strip().split(' - ')
-        en_ru_dict[en_word] = ru_word
+        if re.match(r'^[a-zA-Z]+\s-\s[а-яА-ЯёЁ]+$', line):
+            key, value = line.split(' - ')
+            en_ru_dict[key.strip()] = value.strip()
 
 ru_en_dict = {}
-for en_word, ru_word in en_ru_dict.items():
-    if ru_word not in ru_en_dict:
-        ru_en_dict[ru_word] = []
-    ru_en_dict[ru_word].append(en_word)
+for en_word, ru_translation in en_ru_dict.items():
+    translations = ru_translation.split(',')
+    for translation in translations:
+        ru_en_dict[translation.strip()] = en_word
 
-sorted_ru_en_dict = dict(sorted(ru_en_dict.items()))
-
-with open('ru-en.txt', 'w', encoding='utf-8') as f:
-    for ru_word, en_words in sorted_ru_en_dict.items():
-        f.write(f'{ru_word} - {", ".join(en_words)}n')
+with open('ru-en.txt', 'w') as f:
+    for ru_word, en_translation in sorted(ru_en_dict.items()):
+        f.write(f'{ru_word} - {en_translation}\n')
