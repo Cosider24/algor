@@ -1,18 +1,16 @@
-import re
-
-with open('en-ru.txt', 'r') as f:
-    en_ru_dict = {}
-    for line in f:
-        if re.match(r'^[a-zA-Z]+\s-\s[а-яА-ЯёЁ]+$', line):
-            key, value = line.split(' - ')
-            en_ru_dict[key.strip()] = value.strip()
-
-ru_en_dict = {}
-for en_word, ru_translation in en_ru_dict.items():
-    translations = ru_translation.split(',')
-    for translation in translations:
-        ru_en_dict[translation.strip()] = en_word
-
-with open('ru-en.txt', 'w') as f:
-    for ru_word, en_translation in sorted(ru_en_dict.items()):
-        f.write(f'{ru_word} - {en_translation}\n')
+with open('en-ru.txt', 'r', encoding='utf-8') as file:
+    lines = file.readlines()
+ru_en = {}
+for line in lines:
+    if '-' in line:
+        eng_word, ru_tr = line.strip().split('-')
+        for ru_word in ru_tr.split(','):
+            if ru_word.strip() not in ru_en:
+                ru_en[ru_word.strip()] = [eng_word]
+            else:
+                if eng_word not in ru_en[ru_word.strip()]:
+                    ru_en[ru_word.strip()].append(eng_word)
+with open('ru-en.txt', 'w', encoding='utf-8') as file:
+    for key in sorted(ru_en.keys()):
+        trans = ','.join(sorted(ru_en[key]))
+        file.write(f'{key}-{trans}\n')
